@@ -1,0 +1,26 @@
+name: Run Google Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install CMake
+      run: sudo apt-get update && sudo apt-get install cmake -y
+
+    - name: Create Build Directory
+      run: mkdir build
+
+    - name: Run CMake
+      run: cmake -S . -B build
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Run Tests
+      run: ctest --test-dir build
